@@ -18,12 +18,14 @@ import React, {
   useState,
 } from "react";
 
-import { Button,ButtonProps } from "@/components/ui/button";
+import { Button, ButtonProps } from "@/components/ui/button";
 
+// API to control confetti
 type Api = {
   fire: (options?: ConfettiOptions) => void;
 };
 
+// Component props
 type Props = React.ComponentPropsWithRef<"canvas"> & {
   options?: ConfettiOptions;
   globalOptions?: ConfettiGlobalOptions;
@@ -33,9 +35,8 @@ type Props = React.ComponentPropsWithRef<"canvas"> & {
 
 export type ConfettiRef = Api | null;
 
-const ConfettiContext = createContext<Api>({} as Api);
+const ConfettiContext = createContext<Api>({ fire: () => {} });
 
-// Define component first
 const ConfettiComponent = forwardRef<ConfettiRef, Props>((props, ref) => {
   const {
     options,
@@ -44,43 +45,38 @@ const ConfettiComponent = forwardRef<ConfettiRef, Props>((props, ref) => {
     children,
     ...rest
   } = props;
+
   const instanceRef = useRef<ConfettiInstance | null>(null);
 
   const canvasRef = useCallback(
-    (node: HTMLCanvasElement) => {
+    (node: HTMLCanvasElement | null) => {
       if (node !== null) {
-        if (instanceRef.current) return;
-        instanceRef.current = confetti.create(node, {
-          ...globalOptions,
-          resize: true,
-        });
-      } else {
-        if (instanceRef.current) {
-          instanceRef.current.reset();
-          instanceRef.current = null;
+        if (!instanceRef.current) {
+          instanceRef.current = confetti.create(node, {
+            ...globalOptions,
+            resize: true,
+          });
         }
+      } else if (instanceRef.current) {
+        instanceRef.current.reset();
+        instanceRef.current = null;
       }
     },
-    [globalOptions],
+    [globalOptions]
   );
 
   const fire = useCallback(
-    async (opts = {}) => {
+    async (opts: ConfettiOptions = {}) => {
       try {
         await instanceRef.current?.({ ...options, ...opts });
       } catch (error) {
         console.error("Confetti error:", error);
       }
     },
-    [options],
+    [options]
   );
 
-  const api = useMemo(
-    () => ({
-      fire,
-    }),
-    [fire],
-  );
+  const api = useMemo(() => ({ fire }), [fire]);
 
   useImperativeHandle(ref, () => api, [api]);
 
@@ -104,33 +100,35 @@ const ConfettiComponent = forwardRef<ConfettiRef, Props>((props, ref) => {
   );
 });
 
-// Set display name immediately
 ConfettiComponent.displayName = "Confetti";
-
-// Export as Confetti
 export const Confetti = ConfettiComponent;
 
+// Button Props
 interface ConfettiButtonProps extends ButtonProps {
   options?: ConfettiOptions & ConfettiGlobalOptions & { canvas?: HTMLCanvasElement };
-  email?: string; 
+  email?: string;
   children?: React.ReactNode;
 }
 
-const ConfettiButtonComponent = ({ options, email, children, ...props }: ConfettiButtonProps) => {
+const ConfettiButtonComponent = ({
+  options,
+  email,
+  children,
+  ...props
+}: ConfettiButtonProps) => {
   const [copied, setCopied] = useState(false);
+
   const handleClick = async (event: React.MouseEvent<HTMLButtonElement>) => {
     try {
       const target = event.currentTarget;
-      if (!target) return;
       setCopied(true);
       setTimeout(() => setCopied(false), 2000);
 
       if (email) {
         await navigator.clipboard.writeText(email);
-        // console.log("Email copied:", email);
       }
 
-      const rect = target.getBoundingClientRect(); // Safely get the button position
+      const rect = target.getBoundingClientRect();
       const x = rect.left + rect.width / 2;
       const y = rect.top + rect.height / 2;
 
@@ -147,8 +145,8 @@ const ConfettiButtonComponent = ({ options, email, children, ...props }: Confett
   };
 
   return (
-    <Button onClick={handleClick} {...props} >
-      {copied ? "Copied!" : "Copy Email"}
+    <Button onClick={handleClick} {...props}>
+      {copied ? "Copied!" : children ?? "Copy Email"}
     </Button>
   );
 };
