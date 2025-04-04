@@ -12,7 +12,7 @@ export default function AboutPage() {
         <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold text-blue-400">About Me</h1>
 
         <p className="text-base sm:text-lg text-gray-300 mt-6 leading-relaxed">
-          I'm a passionate full-stack developer with expertise in  
+          I&apos;m a passionate full-stack developer with expertise in  
           <span className="text-blue-400 font-semibold"> React, Next.js, Node.js,</span> and  
           <span className="text-blue-400 font-semibold"> MongoDB.</span>  
           I love creating scalable, performant, and user-friendly applications.  

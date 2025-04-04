@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React from "react";
 import { motion } from "framer-motion";
 import Link from "next/link";
 import Image from "next/image";
@@ -27,11 +27,7 @@ export const MenuItem = ({
   const handleActivate = () => setActive(item);
 
   return (
-    <div
-      onMouseEnter={handleActivate}
-      onClick={handleActivate}
-      className="relative"
-    >
+    <div onMouseEnter={handleActivate} onClick={handleActivate} className="relative">
       <motion.p
         transition={{ duration: 0.3 }}
         className="cursor-pointer text-white hover:opacity-[0.6] dark:text-white"
@@ -110,19 +106,6 @@ export const ProductItem = ({
   );
 };
 
-import {
-  AnchorHTMLAttributes,
-  DetailedHTMLProps,
-  ReactNode,
-} from "react";
-
-type HoveredLinkProps = DetailedHTMLProps<
-  AnchorHTMLAttributes<HTMLAnchorElement>,
-  HTMLAnchorElement
-> & {
-  children: ReactNode;
-};
-
 export const HoveredLink = ({
   children,
   href,
@@ -132,13 +115,8 @@ export const HoveredLink = ({
   href: string;
 } & React.AnchorHTMLAttributes<HTMLAnchorElement>) => {
   return (
-    <Link
-      href={href}
-      {...rest}
-      className="text-white hover:opacity-80"
-    >
+    <Link href={href} {...rest} className="text-white hover:opacity-80">
       {children}
     </Link>
   );
 };
-

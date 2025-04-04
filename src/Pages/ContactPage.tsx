@@ -6,7 +6,7 @@ const contactItems = [
     {
         icon: Mail,
         label: "Email",
-        href: "mailto:gargshivanshu000@gmailcom",
+        href: "mailto:gargshivanshu000@gmail.com",
         text: "gargshivanshu000@gmail.com",
     },
     {
@@ -38,14 +38,12 @@ const ContactPage = () => {
                 transition={{ duration: 0.6 }}
                 className="w-full max-w-3xl bg-white/10 backdrop-blur-lg p-10 rounded-3xl shadow-2xl border border-white/20"
             >
-
                 <h2 className="text-5xl font-bold text-blue-400 text-center mb-4 tracking-wide uppercase">
                     Get in Touch
                 </h2>
                 <p className="text-center text-gray-300 mb-10 text-lg">
-                    I'm always open to exciting projects or collaborations. Feel free to drop a message or connect with me!
+                    I&apos;m always open to exciting projects or collaborations. Feel free to drop a message or connect with me!
                 </p>
-
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                     {contactItems.map((item, idx) => (
@@ -63,7 +61,6 @@ const ContactPage = () => {
                     ))}
                 </div>
 
-
                 <div className="mt-12 text-center">
                     <Link
                         href="https://linkedin.com/in/shivanshu-garg"
@@ -73,8 +70,6 @@ const ContactPage = () => {
                     >
                         Say Hello 👋
                     </Link>
-
-                    
                 </div>
             </motion.div>
         </section>

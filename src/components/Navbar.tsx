@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import { useState } from "react";
 import { Menu, MenuItem } from "../components/ui/navbar-menu";
 import { cn } from "@/lib/utils";
 import Link from "next/link";
@@ -14,7 +14,7 @@ export function NavbarDemo() {
 }
 
 function Navbar({ className }: { className?: string }) {
-  const [active, setActive] = useState<string | null>(null);
+  const [, setActive] = useState<string | null>(null);
   const [mobileOpen, setMobileOpen] = useState(false);
 
   return (

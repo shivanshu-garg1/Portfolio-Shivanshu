@@ -3,6 +3,7 @@
 import { cn } from "@/lib/utils";
 import Globe from "../Globe";
 import { ConfettiButton } from "../magicui/confetti";
+import Image from "next/image"; // ✅ Import next/image
 
 export const BentoGrid = ({
   className,
@@ -55,13 +56,15 @@ export const BentoGridItem = ({
     >
       {/* Background Image */}
       {img && (
-        <img
+        <Image
           src={img}
           alt="bento-background"
+          fill
           className={cn(
-            "absolute inset-0 w-full h-full object-cover opacity-50 z-0 rounded-3xl",
+            "object-cover opacity-50 z-0 rounded-3xl",
             imgClassName
           )}
+          priority
         />
       )}
 
@@ -73,9 +76,11 @@ export const BentoGridItem = ({
             id === 5 && "w-full opacity-80"
           )}
         >
-          <img
+          <Image
             src={spareImg}
             alt="bento-spare"
+            width={200}
+            height={200}
             className="object-cover object-center w-full h-full"
           />
         </div>

@@ -2,7 +2,7 @@
 
 import { cn } from "@/lib/utils";
 import { AnimatePresence, motion, MotionProps, Variants } from "framer-motion";
-import { ElementType, ReactNode } from "react";
+import { ElementType } from "react";
 
 // Animation split types
 type AnimationType = "text" | "word" | "character" | "line";
@@ -19,7 +19,7 @@ type AnimationVariant =
   | "slideRight"
   | "scaleUp"
   | "scaleDown"
-  | "bounce"; // new preset!
+  | "bounce";
 
 interface TextAnimateProps extends MotionProps {
   children: string;
@@ -62,13 +62,6 @@ const defaultContainerVariants: Variants = {
       staggerDirection: -1,
     },
   },
-};
-
-// Simple fallback
-const defaultItemVariants: Variants = {
-  hidden: { opacity: 0 },
-  show: { opacity: 1 },
-  exit: { opacity: 0 },
 };
 
 // All animation presets
