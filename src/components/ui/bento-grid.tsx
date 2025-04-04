@@ -36,8 +36,6 @@ export const BentoGridItem = ({
   className?: string;
   title?: string | React.ReactNode;
   description?: string | React.ReactNode;
-  header?: React.ReactNode;
-  icon?: React.ReactNode;
   id?: number;
   img?: string;
   imgClassName?: string;
@@ -55,7 +53,7 @@ export const BentoGridItem = ({
         className
       )}
     >
-      {/* Background image */}
+      {/* Background Image */}
       {img && (
         <img
           src={img}
@@ -67,9 +65,14 @@ export const BentoGridItem = ({
         />
       )}
 
-      {/* Optional bottom overlay image */}
+      {/* Optional Overlay Image at Bottom Right */}
       {spareImg && (
-        <div className={cn("absolute right-0 -bottom-5", id === 5 && "w-full opacity-80")}>
+        <div
+          className={cn(
+            "absolute right-0 -bottom-5",
+            id === 5 && "w-full opacity-80"
+          )}
+        >
           <img
             src={spareImg}
             alt="bento-spare"
@@ -78,15 +81,15 @@ export const BentoGridItem = ({
         </div>
       )}
 
-      {/* Content */}
+      {/* Text and Content Area */}
       <div
         className={cn(
           titleClassName,
-          "group-hover/bento translate-x-2 transition duration-200 relative  flex items-start justify-center h-full flex-col opacity-100 z-90 px-4 sm:px-5 md:px-8  py-5 lg:py-10"
+          "group-hover/bento translate-x-2 transition duration-200 relative flex items-start justify-center h-full flex-col opacity-100 z-90 px-4 sm:px-5 md:px-8 py-5 lg:py-10"
         )}
       >
         {description && (
-          <div className="text-xs sm:text-sm font-normal text-white dark:text-neutral-300  mb-2">
+          <div className="text-xs sm:text-sm font-normal text-white dark:text-neutral-300 mb-2">
             {description}
           </div>
         )}
@@ -97,20 +100,24 @@ export const BentoGridItem = ({
           </div>
         )}
 
-        {id === 3 && <Globe  />}
+        {/* Globe Animation for id === 3 */}
+        {id === 3 && <Globe />}
 
+        {/* Tech Stack Showcase for id === 4 */}
         {id === 4 && (
           <div className="flex gap-1 sm:gap-2 lg:gap-5 absolute -right-3 lg:-right-2">
             <div className="flex flex-col gap-2 sm:gap-3 lg:gap-8">
               <span className="py-2 sm:py-3 px-3 rounded-lg text-center bg-[#10132E]" />
-              {["React.js", "Node.js", "Express.js", "MongoDB", "TypeScript"].map((item) => (
-                <span
-                  key={item}
-                  className="py-1 sm:py-2 px-2 text-xs sm:text-sm lg:text-base opacity-50 rounded-lg text-center bg-[#10132E]"
-                >
-                  {item}
-                </span>
-              ))}
+              {["React.js", "Node.js", "Express.js", "MongoDB", "TypeScript"].map(
+                (item) => (
+                  <span
+                    key={item}
+                    className="py-1 sm:py-2 px-2 text-xs sm:text-sm lg:text-base opacity-50 rounded-lg text-center bg-[#10132E]"
+                  >
+                    {item}
+                  </span>
+                )
+              )}
               <span className="py-2 sm:py-3 px-3 rounded-lg text-center bg-[#10132E]" />
             </div>
             <div className="flex flex-col gap-2 sm:gap-3 lg:gap-8">
@@ -128,6 +135,7 @@ export const BentoGridItem = ({
           </div>
         )}
 
+        {/* Confetti Button for id === 6 */}
         {id === 6 && (
           <div className="flex justify-center w-full mt-4">
             <ConfettiButton email="gargshivanshu000@gmail.com" />

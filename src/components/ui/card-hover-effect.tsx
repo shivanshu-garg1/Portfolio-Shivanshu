@@ -1,3 +1,5 @@
+"use client";
+
 import { cn } from "@/lib/utils";
 import { AnimatePresence, motion } from "framer-motion";
 import Link from "next/link";
@@ -17,7 +19,7 @@ export const HoverEffect = ({
   }[];
   className?: string;
 }) => {
-  let [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
+  const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
 
   return (
     <div
@@ -29,14 +31,17 @@ export const HoverEffect = ({
       {items.map((item, idx) => (
         <div
           key={item.link}
-          className="relative group block p-2 h-full w-full"
+          className="relative group block p-2 h-full w-full rounded-3xl focus:outline-none"
           onMouseEnter={() => setHoveredIndex(idx)}
           onMouseLeave={() => setHoveredIndex(null)}
+          onFocus={() => setHoveredIndex(idx)}
+          onBlur={() => setHoveredIndex(null)}
+          tabIndex={0}
         >
           <AnimatePresence>
             {hoveredIndex === idx && (
               <motion.span
-                className="absolute inset-0 h-full w-full bg-black/50 rounded-3xl"
+                className="absolute inset-0 h-full w-full bg-black/50 rounded-3xl pointer-events-none"
                 layoutId="hoverBackground"
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1, transition: { duration: 0.15 } }}
@@ -48,7 +53,12 @@ export const HoverEffect = ({
           <Card img={item.img}>
             <CardTitle>{item.title}</CardTitle>
             <CardDescription>{item.description}</CardDescription>
-            <Link href={item.link} target="_blank" rel="noopener noreferrer">
+            <Link
+              href={item.link}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label={`View project: ${item.title}`}
+            >
               <Button className="bg-blue-600 mt-3">View Project</Button>
             </Link>
           </Card>
@@ -70,15 +80,20 @@ export const Card = ({
   return (
     <div
       className={cn(
-        "rounded-2xl h-full w-full p-4 sm:p-5 overflow-hidden border border-blue-900 dark:border-white/[0.2] group-hover:border-slate-700 relative z-20",
+        "rounded-2xl h-full w-full p-4 sm:p-5 overflow-hidden border border-blue-900 dark:border-white/[0.2] group-hover:border-slate-700 relative z-20 transition-shadow duration-300",
         className
       )}
     >
+      {/* Background Image */}
       <div
-        className="absolute inset-0 bg-cover bg-center opacity-30"
+        className="absolute inset-0 bg-cover bg-center opacity-30 pointer-events-none"
         style={{ backgroundImage: `url(${img})` }}
       />
-      <div className="absolute inset-0 bg-black/40 rounded-2xl" />
+
+      {/* Overlay */}
+      <div className="absolute inset-0 bg-black/40 rounded-2xl pointer-events-none" />
+
+      {/* Card Content */}
       <div className="relative z-10 p-4">{children}</div>
     </div>
   );
